@@ -1,0 +1,6 @@
+secrets.yml
+.idea/
+requests/*
+responses/*
+tmp/*
+geckodriver.log

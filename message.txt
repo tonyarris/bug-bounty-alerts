@@ -1,0 +1,7 @@
+Dear ${NAME},
+
+Something has changed in a bug bounty scope. Details below:
+
+${DETAILS}
+
+That is all.
