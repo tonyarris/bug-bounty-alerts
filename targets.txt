@@ -8,9 +8,6 @@ security
 rails
 uber
 shopify
-ruby
-rubygems
-nodejs
 cardano-foundation
 trafficfactory
 elastic
@@ -34,8 +31,7 @@ hilton
 launchdarkly
 o1-labs
 panther_labs
-feltlife
-xvideos
+fetlife
 skale_network
 remitano
 bitso
@@ -48,3 +44,7 @@ oppo
 basecamp
 citrix
 tiktok
+matic-network
+paypal
+nintendo
+logitech

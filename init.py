@@ -3,7 +3,7 @@ import requests
 import json
 import time
 from random import randint
-import os, glob
+import os, glob, sys
 
 # get target names
 def get_targets(filename):
@@ -49,12 +49,15 @@ if __name__ == "__main__":
         # make request and process relevant parts of response
         r = requests.post('https://hackerone.com/graphql', headers=headers, json=body)
         r = r.json()
-        scope = r['data']['team']['in_scope_assets']['edges']
-        for node in scope:
-            f.write(node['node']['asset_identifier'])
-            f.write('\n')
-            f.write(node['node']['instruction'])
-        i += 1
-        f.close
+        try:
+            scope = r['data']['team']['in_scope_assets']['edges']
+            for node in scope:
+                f.write(node['node']['asset_identifier'])
+                f.write('\n')
+                f.write(node['node']['instruction'])
+            i += 1
+            f.close
+        except:
+            print("Unexpected error:", sys.exc_info()[0])
         time.sleep(randint(3,5))
        
