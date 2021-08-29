@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from string import Template
 import smtplib
 import yaml

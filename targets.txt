@@ -39,7 +39,7 @@ lark_technologies
 xilinx_bbp
 exodus
 yoti
-netify
+netlify
 oppo
 basecamp
 citrix
