@@ -12,6 +12,7 @@ A script to scan HackerOne bug bounty scopes and notify via email when they chan
 - Add your email SMTP settings to `secrets_template.yml` and rename the file to `secrets.yml`
 - Add your recipient first name(s) and email(s) to `contacts.txt`, one per line, separated by a space
 - Customise the body of the notification email by editing `message.txt`
+- Create two empty folders: `responses` and `tmp`
 - `pip install PyYAML`
 - Run `init.py` to populate the `responses/` folder with existing bounty scopes
 - Run `main.py` to populate `tmp/` and diff the current scopes against the previous 
