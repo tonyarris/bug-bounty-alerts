@@ -100,8 +100,10 @@ if __name__ == "__main__":
         newL = new.readlines()
         new.close
 
-        # add link
-        details += '\nLink: https://hackerone.com/{0}?type=team\n\n'.format(names[i])
+        if oldL != newL:
+            # add link if there is a difference
+            details += '\nLink: https://hackerone.com/{0}?type=team\n\n'.format(names[i])
+        
         # perform diff
         for line in difflib.context_diff(oldL, newL, fromfile='{0}_old'.format(names[i]), tofile='{0}_new'.format(names[i])):
             
@@ -110,7 +112,8 @@ if __name__ == "__main__":
 
             # signal diff
             diff = True
-        details += '\n'
+        if oldL != newL:
+            details += '\n'
     
     if diff != True:
         files = glob.glob('./tmp/*')
