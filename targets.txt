@@ -175,7 +175,6 @@ localtapiola
 logitech
 logsnitch
 loofah
-lowes_vdp
 lyst
 magisto
 mailru

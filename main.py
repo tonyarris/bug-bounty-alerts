@@ -64,7 +64,7 @@ def genScope(names):
             f.close
         except:
             print("Unexpected error:", sys.exc_info()[0])
-        time.sleep(randint(3,5))
+        time.sleep(randint(1,3))
 
 if __name__ == "__main__":
 

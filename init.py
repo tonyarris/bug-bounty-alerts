@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 # a script to set up the comparison files on first run
 import requests
 import json
@@ -59,5 +61,5 @@ if __name__ == "__main__":
             f.close
         except:
             print("Unexpected error:", sys.exc_info()[0])
-        time.sleep(randint(3,5))
+        time.sleep(randint(1,2))
        
