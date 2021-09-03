@@ -60,6 +60,7 @@ if __name__ == "__main__":
             i += 1
             f.close
         except:
-            print("Unexpected error:", sys.exc_info()[0])
+            print("Unexpected error:", sys.exc_info())
+            i =+ 1
         time.sleep(randint(1,2))
        

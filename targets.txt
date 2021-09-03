@@ -1,6 +1,6 @@
 8x8
 acronis
-adobe1
+adobe
 affirm
 agoric
 aig

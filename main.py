@@ -92,42 +92,43 @@ if __name__ == "__main__":
     names = get_targets('targets.txt')
 
     # generate current scope
-    # genScope(names)
+    genScope(names)
 
     # get list of successfully received scopes
-    names_ = []
-    for files in os.walk(cwd + 'tmp/', topdown=False):
-        for file in files:
-            names_.append(file)
-        
+    names_ = os.listdir(src)
+
     # diff previous and current scope
     for i in range(len(names_)):
-        # prepare previous scope for diff
-        filename = dst + names_[i]
-        old = open(filename, 'r')
-        oldL = old.readlines()
-        old.close
+        try:
+            # prepare previous scope for diff
+            filename = dst + names_[i]
+            old = open(filename, 'r')
+            oldL = old.readlines()
+            old.close
 
-        # prepare current scope for diff
-        filename2 = './tmp/{0}'.format(names_[i])
-        new = open(filename2, 'r')
-        newL = new.readlines()
-        new.close
+            # prepare current scope for diff
+            filename2 = './tmp/{0}'.format(names_[i])
+            new = open(filename2, 'r')
+            newL = new.readlines()
+            new.close
 
-        if oldL != newL:
-            # add link if there is a difference
-            details += '\nLink: https://hackerone.com/{0}?type=team\n\n'.format(names_[i])
-        
-        # perform diff
-        for line in difflib.context_diff(oldL, newL, fromfile='{0}_old'.format(names_[i]), tofile='{0}_new'.format(names_[i])):
+            if oldL != newL:
+                # add link if there is a difference
+                details += '\nLink: https://hackerone.com/{0}?type=team\n\n'.format(names_[i])
             
-            # append diff to details
-            details+=str(line)
+            # perform diff
+            for line in difflib.context_diff(oldL, newL, fromfile='{0}_old'.format(names_[i]), tofile='{0}_new'.format(names_[i])):
+                
+                # append diff to details
+                details+=str(line)
 
-            # signal diff
-            diff = True
-        if oldL != newL:
-            details += '\n'
+                # signal diff
+                diff = True
+            if oldL != newL:
+                details += '\n'
+        except:
+            print("Unexpected error:", sys.exc_info())
+            i += 1
     
     if diff != True:
         files = glob.glob('./tmp/*')
