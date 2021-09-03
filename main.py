@@ -47,15 +47,17 @@ def genScope(names):
         # place target in body
         body['variables']['handle'] = names[i]
 
-        # create/open file
-        filename = './tmp/{0}'.format(names[i])
-        f = open(filename, 'a')
-
         # make request and process relevant parts of response
         r = requests.post('https://hackerone.com/graphql', headers=headers, json=body)
         r = r.json()
         try:
+            # parse and write scope to file
             scope = r['data']['team']['in_scope_assets']['edges']
+
+            # create/open file
+            filename = './tmp/{0}'.format(names[i])
+            f = open(filename, 'a')
+
             for node in scope:
                 f.write(node['node']['asset_identifier'])
                 f.write('\n')
@@ -64,9 +66,15 @@ def genScope(names):
             f.close
         except:
             print("Unexpected error:", sys.exc_info()[0])
+            i += 1
         time.sleep(randint(1,3))
 
 if __name__ == "__main__":
+
+    # get paths
+    cwd = os.getcwd() 
+    src = cwd + '/tmp/'
+    dst = cwd + '/responses/'
 
     # create diff signal & details
     global diff, details
@@ -84,28 +92,34 @@ if __name__ == "__main__":
     names = get_targets('targets.txt')
 
     # generate current scope
-    genScope(names)
+    # genScope(names)
 
+    # get list of successfully received scopes
+    names_ = []
+    for files in os.walk(cwd + 'tmp/', topdown=False):
+        for file in files:
+            names_.append(file)
+        
     # diff previous and current scope
-    for i in range(len(names)):
+    for i in range(len(names_)):
         # prepare previous scope for diff
-        filename = './responses/{0}'.format(names[i])
+        filename = dst + names_[i]
         old = open(filename, 'r')
         oldL = old.readlines()
         old.close
 
         # prepare current scope for diff
-        filename2 = './tmp/{0}'.format(names[i])
+        filename2 = './tmp/{0}'.format(names_[i])
         new = open(filename2, 'r')
         newL = new.readlines()
         new.close
 
         if oldL != newL:
             # add link if there is a difference
-            details += '\nLink: https://hackerone.com/{0}?type=team\n\n'.format(names[i])
+            details += '\nLink: https://hackerone.com/{0}?type=team\n\n'.format(names_[i])
         
         # perform diff
-        for line in difflib.context_diff(oldL, newL, fromfile='{0}_old'.format(names[i]), tofile='{0}_new'.format(names[i])):
+        for line in difflib.context_diff(oldL, newL, fromfile='{0}_old'.format(names_[i]), tofile='{0}_new'.format(names_[i])):
             
             # append diff to details
             details+=str(line)
@@ -156,10 +170,6 @@ if __name__ == "__main__":
             del msg
         
         # replace old check files
-        cwd = os.getcwd() 
-        src = cwd + '/tmp/'
-        dst = cwd + '/responses/'
-
         files = glob.glob(src + '*')
         targets = os.listdir('./tmp')
         i = 0
