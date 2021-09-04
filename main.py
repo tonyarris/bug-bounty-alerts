@@ -92,7 +92,7 @@ if __name__ == "__main__":
     names = get_targets('targets.txt')
 
     # generate current scope
-    # genScope(names)
+    genScope(names)
 
     # get list of successfully received scopes
     names_ = os.listdir(src)
