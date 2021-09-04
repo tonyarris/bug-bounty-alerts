@@ -92,7 +92,7 @@ if __name__ == "__main__":
     names = get_targets('targets.txt')
 
     # generate current scope
-    genScope(names)
+    # genScope(names)
 
     # get list of successfully received scopes
     names_ = os.listdir(src)
@@ -107,7 +107,7 @@ if __name__ == "__main__":
             old.close
 
             # prepare current scope for diff
-            filename2 = './tmp/{0}'.format(names_[i])
+            filename2 = src + names_[i]
             new = open(filename2, 'r')
             newL = new.readlines()
             new.close
