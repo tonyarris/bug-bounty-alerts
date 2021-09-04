@@ -49,8 +49,9 @@ def genScope(names):
 
         # make request and process relevant parts of response
         r = requests.post('https://hackerone.com/graphql', headers=headers, json=body)
-        r = r.json()
         try:
+            r = r.json()
+
             # parse and write scope to file
             scope = r['data']['team']['in_scope_assets']['edges']
 
@@ -65,7 +66,7 @@ def genScope(names):
             i += 1
             f.close
         except:
-            print("Unexpected error on {0}:".format(names[i]), sys.exc_info()[0])
+            print("Unexpected error on {0}:".format(names[i]), sys.exc_info())
             i += 1
         time.sleep(randint(1,3))
 
@@ -92,7 +93,7 @@ if __name__ == "__main__":
     names = get_targets('targets.txt')
 
     # generate current scope
-    genScope(names)
+    # genScope(names)
 
     # get list of successfully received scopes
     names_ = os.listdir(src)
@@ -116,11 +117,11 @@ if __name__ == "__main__":
                 # add link if there is a difference
                 details += '\nLink: https://hackerone.com/{0}?type=team\n\n'.format(names_[i])
             
-            # perform diff
-            for line in difflib.context_diff(oldL, newL, fromfile='{0}_old'.format(names_[i]), tofile='{0}_new'.format(names_[i])):
+                # perform diff
+                for line in difflib.context_diff(oldL, newL, fromfile='{0}_old'.format(names_[i]), tofile='{0}_new'.format(names_[i])):
                 
-                # append diff to details
-                details+=str(line)
+                    # append diff to details
+                    details+=str(line)
 
                 # signal diff
                 diff = True
