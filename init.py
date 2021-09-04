@@ -44,15 +44,17 @@ if __name__ == "__main__":
         # place target in body
         body['variables']['handle'] = names[i]
 
-        # create/open file
-        filename = './responses/{0}'.format(names[i])
-        f = open(filename, 'a')
-
         # make request and process relevant parts of response
         r = requests.post('https://hackerone.com/graphql', headers=headers, json=body)
         r = r.json()
         try:
+            # parse and write scope to file
             scope = r['data']['team']['in_scope_assets']['edges']
+
+            # create/open file
+            filename = './responses/{0}'.format(names[i])
+            f = open(filename, 'a')
+
             for node in scope:
                 f.write(node['node']['asset_identifier'])
                 f.write('\n')
@@ -60,7 +62,7 @@ if __name__ == "__main__":
             i += 1
             f.close
         except:
-            print("Unexpected error:", sys.exc_info())
-            i =+ 1
+            print("Unexpected error on {0}:".format(names[i]), sys.exc_info())
+            i += 1
         time.sleep(randint(1,2))
        

@@ -65,7 +65,7 @@ def genScope(names):
             i += 1
             f.close
         except:
-            print("Unexpected error:", sys.exc_info()[0])
+            print("Unexpected error on {0}:".format(names[i]), sys.exc_info()[0])
             i += 1
         time.sleep(randint(1,3))
 
